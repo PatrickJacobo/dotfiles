@@ -1,0 +1,23 @@
+[Added Associations]
+application/json=nvim.desktop;
+application/pdf=firefox.desktop;
+application/x-docbook+xml=nvim.desktop;
+application/x-yaml=nvim.desktop;
+text/markdown=nvim.desktop;
+text/plain=nvim.desktop;
+text/x-cmake=nvim.desktop;
+
+[Default Applications]
+application/json=nvim.desktop;
+application/pdf=firefox.desktop;
+application/x-docbook+xml=nvim.desktop;
+application/x-yaml=nvim.desktop;
+text/markdown=nvim.desktop;
+text/plain=nvim.desktop;
+text/x-cmake=nvim.desktop;
+x-scheme-handler/ame=cider.desktop
+x-scheme-handler/cider=cider.desktop
+x-scheme-handler/itms=cider.desktop
+x-scheme-handler/itmss=cider.desktop
+x-scheme-handler/musics=cider.desktop
+x-scheme-handler/music=cider.desktop

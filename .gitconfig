@@ -1,0 +1,7 @@
+[user]
+	name = JacobsLaptop
+	email = leepatrick338@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	editor = vim
