@@ -16,8 +16,13 @@ shell
 in $ HOME
 
 > $ mkdir dotfiles
+
 > $ cd dotfiles
+
 > $ git clone (this) --depth 1
+
 > $ pacman -S stow
+
 > $ stow .
+
 > $ download the rest of the programs
