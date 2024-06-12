@@ -3,12 +3,19 @@
 ## Apps
 
 tmux
+
 git
+
 kitty
+
 kde plasma (not all of them)
+
 nvim (astro)
+
 zsh
+
 bash
+
 shell
 
 ## Copy to local
