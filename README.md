@@ -10,7 +10,7 @@ kitty
 
 kde plasma (not all of them)
 
-nvim (astro)
+nvim 
 
 zsh
 
