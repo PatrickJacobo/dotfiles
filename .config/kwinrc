@@ -1,7 +1,19 @@
 [Desktops]
 Id_1=24cc6fdb-b3eb-4994-a7f9-39e090caa172
-Number=1
+Id_2=cef965d9-3519-4601-a144-16b7ee84dc69
+Id_3=96734e6c-0002-48f7-aacf-a17a6aaba110
+Id_4=4d554563-4902-4002-9c9d-29b835a5c15a
+Name_1=Main
+Name_2=PHPworkflow
+Name_3=PythonWorkflow
+Name_4=Bottom
+Number=4
 Rows=1
+
+[Effect-cube]
+Background=SkyBox
+BackgroundColor=24,24,37
+SkyBox=/home/jacobendeavour/Downloads/1353199.png
 
 [NightColor]
 Active=true
@@ -10,6 +22,7 @@ NightTemperature=5600
 
 [Plugins]
 blurEnabled=true
+cubeEnabled=true
 glideEnabled=true
 magiclampEnabled=true
 scaleEnabled=false
@@ -20,6 +33,9 @@ wobblywindowsEnabled=true
 padding=4
 
 [Tiling][1668391c-7644-5882-a087-e978259c7197]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.15625},{"width":0.474609375},{"width":0.369140625}]}
+
+[Tiling][b044673c-8d05-5835-88a4-d4121548708a]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Xwayland]
