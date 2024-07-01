@@ -1,9 +1,3 @@
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=4")
-vim.cmd("set softtabstop=4")
-vim.cmd("set shiftwidth=4")
-vim.g.mapleader = " "
-
 -- Lazy install
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -19,8 +13,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("vim-options")
+require("set")
+require("keymaps")
 require("lazy").setup("plugins")
 
 -- treesitter config
-local config = require("nvim-treesitter.configs")
 

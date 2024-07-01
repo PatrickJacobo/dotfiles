@@ -21,6 +21,7 @@ PATH="$HOME/.go/bin:$PATH"
 
 export EDITOR=nvim
 
+
 # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
@@ -93,7 +94,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
-alias ls='eza --color'
+alias ls='eza --color=always --no-time --no-user --no-permissions -a  --no-filesize --icons=always'
 alias vim='nvim'
 alias c='clear'
 alias du='dust'
@@ -101,6 +102,7 @@ alias df='duf'
 alias cat="bat"
 alias grep="rg"
 alias find="fd"
+alias man="batman"
 
 # Shell integrations
 eval "$(fzf --zsh)"
@@ -125,3 +127,4 @@ read_file() {
     done < "$file_path"
 }
 read_file nervlogo.txt
+

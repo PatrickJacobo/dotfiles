@@ -1,5 +1,5 @@
 import = [
-    "~/dotfiles/.config/alacritty/themes/themes/catppuccin_mocha.toml"
+    "~/dotfiles/.config/alacritty/themes/themes/tokyonight-night.toml"
 ]
 [window]
 padding.x=5
