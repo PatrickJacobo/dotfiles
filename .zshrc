@@ -103,6 +103,7 @@ alias cat="bat"
 alias grep="rg"
 alias find="fd"
 alias man="batman"
+alias delete-orphans="pacman -Qqd | pacman -Rsu -"
 
 # Shell integrations
 eval "$(fzf --zsh)"
