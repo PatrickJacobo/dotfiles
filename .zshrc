@@ -14,6 +14,7 @@ else
 fi
 
 PATH="$HOME/.go/bin:$PATH"
+export PATH="$PATH:$HOME/.config/emacs/bin"
 # if [[ -f "/opt/homebrew/bin/brew" ]] then
 #   # If you're using macOS, you'll want this enabled
 #   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -103,10 +104,10 @@ alias cat="bat"
 alias grep="rg"
 alias find="fd"
 alias man="batman"
-alias delete-orphans="pacman -Qqd | pacman -Rsu -"
+alias delete-orphans="pacman -Qqd |sudo  pacman -Rsu -"
 
 # Shell integrations
-eval "$(fzf --zsh)"
+source <(fzf --zsh)
 eval "$(zoxide init --cmd cd zsh)"
 
 #Nerv Logo
@@ -127,5 +128,7 @@ read_file() {
         echo -e "$color_code $line\033[0m"
     done < "$file_path"
 }
-read_file nervlogo.txt
+read_file ~/nervlogo.txt
 
+alias ping='gping'
+alias mysql='/opt/lampp/bin/mysql'

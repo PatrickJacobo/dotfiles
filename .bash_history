@@ -133,3 +133,4 @@ cd ~/bin
 exit
 echo $SHELL
 exit
+zsh
