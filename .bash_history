@@ -177,3 +177,8 @@ ls /usr/bin|rg rofi
 ls /usr/bin/rofi
 nvim config
 sway
+help
+exit
+ls
+cd
+echo $SHELL

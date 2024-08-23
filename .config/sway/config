@@ -3,7 +3,7 @@
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
-exec_always --no-startup-id emacs --daemon
+exec --no-startup-id emacs --daemon
 exec_always  killall waybar
 
 ### Variables
@@ -43,12 +43,12 @@ default_border pixel 1
 #
 # Example configuration:
 
-bindsym $mod+o exec swaylock --config ~/dotfiles/.config/swaylock/config
-exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
-         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         before-sleep 'swaylock -f -c 000000'
-
+# bindsym $mod+o exec swaylock --config ~/dotfiles/.config/swaylock/config
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
@@ -213,7 +213,7 @@ bindsym Mod1+u exec "wtype 'ú'"
 bindsym Mod1+shift+u exec "wtype 'ü'"
 bindsym Mod1+n exec "wtype 'ñ'"
 
-bindsym $mod+s exec grim -g "$(slurp -d)" - | wl-copy
+bindsym $mod+y exec grim -g "$(slurp -d)" - | wl-copy
 #
 # Status Bar:
 #
