@@ -104,7 +104,6 @@ alias cat="bat"
 alias grep="rg"
 alias find="fd"
 alias man="batman"
-alias delete-orphans="pacman -Qqd |sudo  pacman -Rsu -"
 
 # Shell integrations
 source <(fzf --zsh)
