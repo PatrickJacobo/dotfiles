@@ -1,0 +1,34 @@
+#+title:Alacritty Config
+#+author: Patrick Lee
+#+property:  header-args :tangle alacritty.toml
+* About
+This config tangles to alacritty.toml, the alacritty tools config file.
+This uses the folke/tokyonight repo config for color.
+https://github.com/folke/tokyonight.nvim/tree/main
+
+* Theme for alacritty
+This import uses an absolute path, because i did the funny
+#+begin_src toml
+import = [
+    "./themes/themes/tokyonight-night.toml"
+]
+#+end_src
+
+* Window rules
+This just sets the window to have a very slight border.
+Also removes the buttons in the corner and makes it slightly transparent
+#+begin_src toml
+[window]
+padding.x=5
+padding.y=5
+decorations = "Buttonless"
+opacity = 0.9
+#+end_src
+
+* Font
+This sets the font to a comfortable size for my screen while using xorg.
+In wayland I use a greater size. (9)
+#+begin_src toml
+[font]
+size = 7
+#+end_src

@@ -57,9 +57,9 @@
 
 	"clock#time": {
 		"interval": 10,
-		"format": "{:%H:%M}",
+		"format": "{:L%H:%M}",
 		"tooltip": false,
-        "timezone":"America/Chicago"
+        "timezone":"localtime"
 	},
 
 	"clock#date": {

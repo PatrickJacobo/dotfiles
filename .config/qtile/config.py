@@ -37,7 +37,7 @@ import colors
 
 mod = "mod4"              # Sets mod key to SUPER/WINDOWS
 myTerm = "alacritty"      # My terminal of choice
-myBrowser = "brave"       # My browser of choice
+myBrowser = "firefox"       # My browser of choice
 myEmacs = "emacsclient -c -a 'emacs' " # The space at the end is IMPORTANT!
 
 # Allows you to input a name when adding treetab section.
@@ -69,11 +69,11 @@ keys = [
     Key([mod], "w", lazy.spawn(myBrowser), desc='Web browser'),
     Key([mod], "b", lazy.hide_show_bar(position='all'), desc="Toggles the bar to show/hide"),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "shift"], "q", lazy.spawn("dm-logout -r"), desc="Logout menu"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    
+
     # Switch between windows
     # Some layouts like 'monadtall' only need to use j/k to move
     # through the stack, but other layouts like 'columns' will
@@ -116,7 +116,7 @@ keys = [
     # Treetab prompt
     Key([mod, "shift"], "a", add_treetab_section, desc='Prompt to add new section in treetab'),
 
-    # Grow/shrink windows left/right. 
+    # Grow/shrink windows left/right.
     # This is mainly for the 'monadtall' and 'monadwide' layouts
     # although it does also work in the 'bsp' and 'columns' layouts.
     Key([mod], "equal",
@@ -145,11 +145,10 @@ keys = [
     # Switch focus of monitors
     Key([mod], "period", lazy.next_screen(), desc='Move focus to next monitor'),
     Key([mod], "comma", lazy.prev_screen(), desc='Move focus to prev monitor'),
-    
+
     # Emacs programs launched using the key chord CTRL+e followed by 'key'
     KeyChord([mod],"e", [
         Key([], "e", lazy.spawn(myEmacs), desc='Emacs Dashboard'),
-        Key([], "a", lazy.spawn(myEmacs + "--eval '(emms-play-directory-tree \"~/Music/\")'"), desc='Emacs EMMS'),
         Key([], "b", lazy.spawn(myEmacs + "--eval '(ibuffer)'"), desc='Emacs Ibuffer'),
         Key([], "d", lazy.spawn(myEmacs + "--eval '(dired nil)'"), desc='Emacs Dired'),
         Key([], "i", lazy.spawn(myEmacs + "--eval '(erc)'"), desc='Emacs ERC'),
@@ -161,23 +160,25 @@ keys = [
                       desc='Kill/restart the Emacs daemon')
     ]),
     # Dmenu/rofi scripts launched using the key chord SUPER+p followed by 'key'
-    KeyChord([mod], "p", [
-        Key([], "h", lazy.spawn("dm-hub -r"), desc='List all dmscripts'),
-        Key([], "a", lazy.spawn("dm-sounds -r"), desc='Choose ambient sound'),
-        Key([], "b", lazy.spawn("dm-setbg -r"), desc='Set background'),
-        Key([], "c", lazy.spawn("dtos-colorscheme -r"), desc='Choose color scheme'),
-        Key([], "e", lazy.spawn("dm-confedit -r"), desc='Choose a config file to edit'),
-        Key([], "i", lazy.spawn("dm-maim -r"), desc='Take a screenshot'),
-        Key([], "k", lazy.spawn("dm-kill -r"), desc='Kill processes '),
-        Key([], "m", lazy.spawn("dm-man -r"), desc='View manpages'),
-        Key([], "n", lazy.spawn("dm-note -r"), desc='Store and copy notes'),
-        Key([], "o", lazy.spawn("dm-bookman -r"), desc='Browser bookmarks'),
-        Key([], "p", lazy.spawn("rofi-pass"), desc='Logout menu'),
-        Key([], "q", lazy.spawn("dm-logout -r"), desc='Logout menu'),
-        Key([], "r", lazy.spawn("dm-radio -r"), desc='Listen to online radio'),
-        Key([], "s", lazy.spawn("dm-websearch -r"), desc='Search various engines'),
-        Key([], "t", lazy.spawn("dm-translate -r"), desc='Translate text')
-    ])
+    Key([mod], "v", lazy.spawn("clipcat-menu")),
+    Key([ mod ], "y", lazy.spawn("sh -c 'scrot -s -o /dev/stdout | xclip -selection clipboard -t image/png'"), desc="Take screenshot of selected area and copy to clipboard"),
+    # KeyChord([mod], "p", [
+    #     Key([], "h", lazy.spawn("dm-hub -r"), desc='List all dmscripts'),
+    #     Key([], "a", lazy.spawn("dm-sounds -r"), desc='Choose ambient sound'),
+    #     Key([], "b", lazy.spawn("dm-setbg -r"), desc='Set background'),
+    #     Key([], "c", lazy.spawn("dtos-colorscheme -r"), desc='Choose color scheme'),
+    #     Key([], "e", lazy.spawn("dm-confedit -r"), desc='Choose a config file to edit'),
+    #     Key([], "i", lazy.spawn("dm-maim -r"), desc='Take a screenshot'),
+    #     Key([], "k", lazy.spawn("dm-kill -r"), desc='Kill processes '),
+    #     Key([], "m", lazy.spawn("dm-man -r"), desc='View manpages'),
+    #     Key([], "n", lazy.spawn("dm-note -r"), desc='Store and copy notes'),
+    #     Key([], "o", lazy.spawn("dm-bookman -r"), desc='Browser bookmarks'),
+    #     Key([], "p", lazy.spawn("rofi-pass"), desc='Logout menu'),
+    #     Key([], "q", lazy.spawn("dm-logout -r"), desc='Logout menu'),
+    #     Key([], "r", lazy.spawn("dm-radio -r"), desc='Listen to online radio'),
+    #     Key([], "s", lazy.spawn("dm-websearch -r"), desc='Search various engines'),
+    #     Key([], "t", lazy.spawn("dm-translate -r"), desc='Translate text')
+    # ])
 ]
 
 groups = []
@@ -217,7 +218,7 @@ for i in groups:
         ]
     )
 
-colors = colors.DoomOne
+colors = colors.Dracula
 
 layout_theme = {"border_width": 2,
                 "margin": 8,
@@ -286,8 +287,8 @@ def init_widgets_list():
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)},
                  ),
         widget.Prompt(
-                 font = "Ubuntu Mono",
-                 fontsize=14,
+                 font = "JetBrains Mono",
+                 fontsize=12,
                  foreground = colors[1]
         ),
         widget.GroupBox(
@@ -299,7 +300,7 @@ def init_widgets_list():
                  borderwidth = 3,
                  active = colors[8],
                  inactive = colors[1],
-                 rounded = False,
+                 rounded = True,
                  highlight_color = colors[2],
                  highlight_method = "line",
                  this_current_screen_border = colors[7],
@@ -309,7 +310,7 @@ def init_widgets_list():
                  ),
         widget.TextBox(
                  text = '|',
-                 font = "Ubuntu Mono",
+                 font = "JetBrains Mono",
                  foreground = colors[1],
                  padding = 2,
                  fontsize = 14
@@ -326,7 +327,7 @@ def init_widgets_list():
                  ),
         widget.TextBox(
                  text = '|',
-                 font = "Ubuntu Mono",
+                 font = "JetBrains Mono",
                  foreground = colors[1],
                  padding = 2,
                  fontsize = 14
@@ -361,9 +362,10 @@ def init_widgets_list():
         widget.Spacer(length = 8),
         widget.Memory(
                  foreground = colors[8],
-                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btm')},
+                 measure_mem='G',
                  format = '{MemUsed: .0f}{mm}',
-                 fmt = '🖥  Mem: {} used',
+                 fmt = '🖥  Mem: {}',
                  decorations=[
                      BorderDecoration(
                          colour = colors[8],
@@ -372,48 +374,58 @@ def init_widgets_list():
                  ],
                  ),
         widget.Spacer(length = 8),
-        widget.DF(
-                 update_interval = 60,
-                 foreground = colors[5],
-                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e df')},
-                 partition = '/',
-                 #format = '[{p}] {uf}{m} ({r:.0f}%)',
-                 format = '{uf}{m} free',
-                 fmt = '🖴  Disk: {}',
-                 visible_on_warn = False,
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[5],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
-                 ),
+        widget.Battery(foreground=colors[6],
+                        low_percentage=0.20,
+                        low_foreground=colors[3],
+                        update_delay=10,
+                        format='{percent:.0%} {hour:d}:{min:02d} ',
+                        decorations=[
+                        BorderDecoration(
+                                colour= colors[6],
+                                border_width= [0,0,2,0])],
+                        ),
+        # widget.DF(
+        #          update_interval = 60,
+        #          foreground = colors[5],
+        #          mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e duf')},
+        #          partition = '/',
+        #          #format = '[{p}] {uf}{m} ({r:.0f}%)',
+        #          format = '{uf}{m} free',
+        #          fmt = '🖴  Disk: {}',
+        #          visible_on_warn = False,
+        #          decorations=[
+        #              BorderDecoration(
+        #                  colour = colors[5],
+        #                  border_width = [0, 0, 2, 0],
+        #              )
+        #          ],
+        #          ),
         widget.Spacer(length = 8),
-        widget.Volume(
-                 foreground = colors[7],
-                 fmt = '🕫  Vol: {}',
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[7],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
-                 ),
+        # widget.Volume(
+        #          foreground = colors[7],
+        #          fmt = '🕫  Vol: {}',
+        #          decorations=[
+        #              BorderDecoration(
+        #                  colour = colors[7],
+        #                  border_width = [0, 0, 2, 0],
+        #              )
+        #          ],
+        #          )    ,
         widget.Spacer(length = 8),
-        widget.KeyboardLayout(
-                 foreground = colors[4],
-                 fmt = '⌨  Kbd: {}',
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[4],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
-                 ),
+        # widget.KeyboardLayout(
+        #          foreground = colors[4],
+        #          fmt = '⌨  Kbd: {}',
+        #          decorations=[
+        #              BorderDecoration(
+        #                  colour = colors[4],
+        #                  border_width = [0, 0, 2, 0],
+        #              )
+        #          ],
+        #          ),
         widget.Spacer(length = 8),
         widget.Clock(
                  foreground = colors[8],
-                 format = "⏱  %a, %b %d - %H:%M",
+                 format = "⏱  %y- %m - %d - %H:%M",
                  decorations=[
                      BorderDecoration(
                          colour = colors[8],

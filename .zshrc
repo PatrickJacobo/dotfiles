@@ -104,6 +104,8 @@ alias cat="bat"
 alias grep="rg"
 alias find="fd"
 alias man="batman"
+alias ping='gping'
+alias cleancache="sudo pacman -Sc"
 
 # Shell integrations
 source <(fzf --zsh)
@@ -129,5 +131,15 @@ read_file() {
 }
 read_file ~/nervlogo.txt
 
-alias ping='gping'
-alias mysql='/opt/lampp/bin/mysql'
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+if type clipcat-menu >/dev/null 2>&1; then
+    alias clipedit=' clipcat-menu --finder=builtin edit'
+    alias clipdel=' clipcat-menu --finder=builtin remove'
+
+    bindkey -s '^\' "^Q clipcat-menu --finder=builtin insert ^J"
+    bindkey -s '^]' "^Q clipcat-menu --finder=builtin remove ^J"
+fi
+
+

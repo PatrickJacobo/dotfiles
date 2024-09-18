@@ -3,7 +3,6 @@
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
-exec --no-startup-id emacs --daemon
 
 ### Variables
 #
@@ -72,12 +71,12 @@ default_border pixel 1
 #
     # Start a terminal
     bindsym $mod+Return exec $term
-bindsym $mod+p exec --no-startup-id emacsclient -c
+bindsym $mod+p exec --no-startup-id emacsclient --create-frame --alternate-editor=""
     # Kill focused window
     bindsym $mod+q kill
 
     # Start your launcher
-    bindsym $mod+r exec $menu
+    bindsym $mod+Shift+Return exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.

@@ -1,0 +1,3 @@
+#+title: Zsh config
+#+author: Patrick Lee
+#+property: header-args :tangle

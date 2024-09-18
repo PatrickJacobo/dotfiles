@@ -1,12 +1,12 @@
 import = [
-    "~/dotfiles/.config/alacritty/themes/themes/tokyonight-night.toml"
+    "./themes/themes/tokyonight-night.toml"
 ]
+
 [window]
 padding.x=5
 padding.y=5
-
 decorations = "Buttonless"
 opacity = 0.9
 
 [font]
-size = 6
+size = 7

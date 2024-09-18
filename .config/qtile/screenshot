@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+scrot -s -o /dev/stdout | xclip -selection clipboard -t image/png
+mkdir /home/jacobarch/owo
