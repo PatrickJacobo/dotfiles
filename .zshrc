@@ -21,7 +21,7 @@ export PATH="$PATH:$HOME/.config/emacs/bin"
 # fi
 
 export EDITOR=nvim
-
+export BAT_THEME="Catppuccin Mocha"
 
 # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)

@@ -1,0 +1,55 @@
+#+Title: Emacs Config
+#+Author: Patrick Lee
+#+email: leepatrick338@gmail.com
+#+PROPERTY: header-args :tangle ./init.el
+
+
+* Index :TOC:
+- [[#introduction][Introduction]]
+- [[#package-manager][Package Manager]]
+- [[#colorscheme][Colorscheme]]
+- [[#auto-toc-maker][Auto TOC maker]]
+
+* Introduction
+This is a straight.el and somewhat minimal installation of emacs.
+It does not use any kind of framework, and every package is imported through
+use-package
+
+* Package Manager
+
+#+begin_src emacs_lisp
+  (defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+  (straight-use-package 'use-package)
+  (setq straight-use-package-by-default t)
+#+end_src
+
+* Colorscheme
+ #+begin_src emacs_lisp
+ (use-package catppuccin-theme)
+ (load-theme 'catppuccin :no-confirm)
+ #+end_src
+
+* Auto TOC maker
+
+#+begin_src emacs_lisp
+(use-package toc-org)
+(add-hook 'org-mode-hook 'toc-org-mode)
+
+      ;; enable in markdown, too
+      (add-hook 'markdown-mode-hook 'toc-org-mode)
+      (define-key markdown-mode-map (kbd "\C-c\C-o") 'toc-org-markdown-follow-thing-at-point)
+#+end_src

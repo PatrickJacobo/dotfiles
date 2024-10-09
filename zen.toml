@@ -58,7 +58,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
       "{{if eq .Code 0}}p:lavender{{end}}",
     ]
     background = 'transparent'
-    template = '❯'
+    template = 'λ'
 
 [transient_prompt]
   foreground_templates = [
@@ -66,12 +66,12 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     "{{if eq .Code 0}}p:lavender{{end}}",
   ]
   background = 'transparent'
-  template = '❯ '
+  template = 'λ '
 
 [secondary_prompt]
   foreground = 'p:lavender'
   background = 'transparent'
-  template = '❯❯ '
+  template = 'λλ '
 [palette]
 os = "#ACB0BE"
 pink = "#F5BDE6"
