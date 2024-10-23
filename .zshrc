@@ -106,6 +106,7 @@ alias find="fd"
 alias man="batman"
 alias ping='gping'
 alias cleancache="sudo pacman -Sc"
+alias weather="curl wttr.in"
 
 # Shell integrations
 source <(fzf --zsh)
