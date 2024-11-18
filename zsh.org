@@ -1,3 +1,219 @@
 #+title: Zsh config
 #+author: Patrick Lee
-#+property: header-args :tangle
+
+* Index :toc:
+- [[Nervlogo][Nervlogo]]
+- [[Zshrc][Zshrc]]
+  - [[Some stuff for tty][Some stuff for tty]]
+  - [[Path Stuff][Path Stuff]]
+  - [[ZINIT instance][ZINIT instance]]
+  - [[Prompt][Prompt]]
+  - [[Keybinds][Keybinds]]
+  - [[Zsh opts for history][Zsh opts for history]]
+  - [[Completion][Completion]]
+  - [[Alias][Alias]]
+  - [[Stuff for fzf to work][Stuff for fzf to work]]
+  - [[Function to generate the nerv logo at startup][Function to generate the nerv logo at startup]]
+  - [[PYENV stuff][PYENV stuff]]
+  - [[Haskell stuff][Haskell stuff]]
+  - [[Google stuff][Google stuff]]
+  - [[Php stuff][Php stuff]]
+
+* Nervlogo
+This is the logo of Nerv that shows at startup.
+It doesn't use too much memory; and is somewhat nice to look at.
+#+begin_src txt :tangle nervlogo.txt
+                                __ _._.,._.__
+                          .o8888888888888888P'
+                        .d88888888888888888K
+          ,8            888888888888888888888boo._
+         :88b           888888888888888888888888888b.
+          `Y8b          88888888888888888888888888888b.
+            `Yb.       d8888888888888888888888888888888b
+              `Yb.___.88888888888888888888888888888888888b
+                `Y888888888888888888888888888888CG88888P"'
+                  `88888888888888888888888888888MM88P"'
+ "Y888K    "Y8P""Y888888888888888888888888oo._""""
+   88888b    8    8888`Y88888888888888888888888oo.
+   8"Y8888b  8    8888  ,8888888888888888888888888o,
+   8  "Y8888b8    8888""Y8`Y8888888888888888888888b.
+   8    "Y8888    8888   Y  `Y8888888888888888888888
+   8      "Y88    8888     .d `Y88888888888888888888b
+ .d8b.      "8  .d8888b..d88P   `Y88888888888888888888
+                                  `Y88888888888888888b.
+                   "Y888P""Y8b. "Y888888888888888888888
+                     888    888   Y888`Y888888888888888
+                     888   d88P    Y88b `Y8888888888888
+                     888"Y88K"      Y88b dPY8888888888P
+                     888  Y88b       Y88dP  `Y88888888b
+                     888   Y88b       Y8P     `Y8888888
+                   .d888b.  Y88b.      Y        `Y88888
+                                                  `Y88K
+                                                    `Y8
+                                                      '
+#+end_src
+* Zshrc
+** Some stuff for tty
+ Set the GPG_TTY to be the same as the TTY, either via the env var
+ or via the tty command.
+#+begin_src zsh :tangle .zshrc
+if [ -n "$TTY" ]; then
+  export GPG_TTY=$(tty)
+else
+  export GPG_TTY="$TTY"
+fi
+#+end_src
+** Path Stuff
+#+begin_src zsh :tangle .zshrc
+PATH="$HOME/.go/bin:$PATH"
+export PATH=$PATH:/home/jacob/.local/bin
+export PATH="$PATH:$HOME/.config/emacs/bin"
+# if [[ -f "/opt/homebrew/bin/brew" ]] then
+#   # If you're using macOS, you'll want this enabled
+#   eval "$(/opt/homebrew/bin/brew shellenv)"
+# fi
+export EDITOR=nvim
+export BAT_THEME="Catppuccin Mocha"
+# SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
+# export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+# gpgconf --launch gpg-agent
+
+#+end_src
+** ZINIT instance
+Set the directory we want to store zinit and plugins
+Download Zinit, if it's not there yet
+Source/Load zinit
+#+begin_src zsh :tangle .zshrc
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+#+end_src
+*** ZINIT plugins
+Syntax highlight
+Completions
+Autosuggestions
+FZF
+git
+sudo
+command-not found
+compinit
+cdreplay
+#+begin_src zsh :tangle .zshrc
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+zinit snippet OMZP::sudo
+zinit snippet OMZP::command-not-found
+autoload -Uz compinit && compinit
+zinit cdreplay -q
+#+end_src
+** Prompt
+#+begin_src zsh :tangle .zshrc
+eval "$(oh-my-posh init zsh --config $HOME/zen.toml)"
+#+end_src
+** Keybinds
+#+begin_src zsh :tangle .zshrc
+bindkey -e
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+bindkey '^[w' kill-region
+#+end_src
+** Zsh opts for history
+#+begin_src zsh :tangle .zshrc
+zle_highlight+=(paste:none)
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+#+end_src
+** Completion
+#+begin_src zsh :tangle .zshrc
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+#+end_src
+** Alias
+ls
+vim
+c
+du
+df
+cat
+grep
+find
+ping
+cleancache
+weather
+fuck
+#+begin_src zsh :tangle .zshrc
+alias ls='eza --color=always --no-time --no-user --no-permissions -a  --no-filesize --icons=always'
+alias vim='nvim'
+alias c='clear'
+alias du='dust'
+alias df='duf'
+alias cat="bat"
+alias grep="rg"
+alias find="fd"
+alias ping='gping'
+#alias cleancache="sudo pacman -Sc" #ARCH
+alias cleancache="sudo xbps-remove --clean-cache" #VOID
+alias weather="curl wttr.in"
+alias fuck="pkill -9"
+#+end_src
+** Stuff for fzf to work
+#+begin_src zsh :tangle .zshrc
+# Shell integrations
+alias fzf='fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"'
+source <(fzf --zsh)
+eval "$(zoxide init --cmd cd zsh)"
+#+end_src
+** Function to generate the nerv logo at startup
+#+begin_src zsh :tangle .zshrc
+color_code="\033[38;2;254;0;0m"
+read_file() {
+    local file_path="$1"
+    if [ ! -f "$file_path" ]; then
+        echo "File not found!"
+        return 1
+    fi
+    while IFS= read -r line
+    do
+        echo -e "$color_code $line\033[0m"
+    done < "$file_path"
+}
+read_file ~/nervlogo.txt
+#+end_src
+** PYENV stuff
+#+begin_src zsh :tangle .zshrc
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+#+end_src
+** Haskell stuff
+#+begin_src zsh :tangle .zshrc
+[ -f "/home/jacob/.ghcup/env" ] && . "/home/jacob/.ghcup/env"
+#+end_src
+** Google stuff
+Enables gcloud autocomp
+#+begin_src zsh :tangle .zshrc
+if [ -f '/home/jacob/ocrtest/google-cloud-sdk/path.zsh.inc' ]; then . '/home/jacob/ocrtest/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/home/jacob/ocrtest/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/jacob/ocrtest/google-cloud-sdk/completion.zsh.inc'; fi
+
+#+end_src
+** Php stuff
+#+begin_src zsh :tangle .zshrc
+export PATH="~/.config/composer/vendor/bin:$PATH"
+#+end_src

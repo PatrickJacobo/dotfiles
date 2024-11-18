@@ -1,8 +1,27 @@
-#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
-
-version = 2
-final_space = true
 console_title_template = '{{ .Shell }} in {{ .Folder }}'
+version = 3
+final_space = true
+
+[palette]
+  blue = '#8AADF4'
+  lavender = '#B7BDF8'
+  os = '#ACB0BE'
+  peach = '#fab387'
+  pink = '#F5BDE6'
+  red = '#f38ba8'
+  text = '#494D64'
+  wight = '#FFFFFF'
+  yellow = '#f9e2af'
+
+[secondary_prompt]
+  template = 'λλ '
+  foreground = 'p:lavender'
+  background = 'transparent'
+
+[transient_prompt]
+  template = 'λ '
+  background = 'transparent'
+  foreground_templates = ['{{if gt .Code 0}}p:red{{end}}', '{{if eq .Code 0}}p:lavender{{end}}']
 
 [[blocks]]
   type = 'prompt'
@@ -10,21 +29,21 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   newline = true
 
   [[blocks.segments]]
+    template = '{{ .Path }}'
+    foreground = 'p:peach'
+    background = 'transparent'
     type = 'path'
     style = 'plain'
-    background = 'transparent'
-    foreground = 'p:peach'
-    template = '{{ .Path }}'
 
     [blocks.segments.properties]
       style = 'full'
 
   [[blocks.segments]]
-    type = 'git'
-    style = 'plain'
+    template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
     foreground = 'p:text'
     background = 'transparent'
-    template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
+    type = 'git'
+    style = 'plain'
 
     [blocks.segments.properties]
       branch_icon = ''
@@ -36,11 +55,11 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   overflow = 'hidden'
 
   [[blocks.segments]]
-    type = 'executiontime'
-    style = 'plain'
+    template = '{{ .FormattedMs }}'
     foreground = 'p:yellow'
     background = 'transparent'
-    template = '{{ .FormattedMs }}'
+    type = 'executiontime'
+    style = 'plain'
 
     [blocks.segments.properties]
       threshold = 5000
@@ -51,34 +70,8 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   newline = true
 
   [[blocks.segments]]
+    template = 'λ'
+    background = 'transparent'
     type = 'text'
     style = 'plain'
-    foreground_templates = [
-      "{{if gt .Code 0}}p:red{{end}}",
-      "{{if eq .Code 0}}p:lavender{{end}}",
-    ]
-    background = 'transparent'
-    template = 'λ'
-
-[transient_prompt]
-  foreground_templates = [
-    "{{if gt .Code 0}}p:red{{end}}",
-    "{{if eq .Code 0}}p:lavender{{end}}",
-  ]
-  background = 'transparent'
-  template = 'λ '
-
-[secondary_prompt]
-  foreground = 'p:lavender'
-  background = 'transparent'
-  template = 'λλ '
-[palette]
-os = "#ACB0BE"
-pink = "#F5BDE6"
-lavender = "#B7BDF8"
-blue = "#8AADF4"
-wight = "#FFFFFF"
-yellow="#f9e2af"
-peach="#fab387"
-red="#f38ba8"
-text = "#494D64"  
+    foreground_templates = ['{{if gt .Code 0}}p:red{{end}}', '{{if eq .Code 0}}p:lavender{{end}}']

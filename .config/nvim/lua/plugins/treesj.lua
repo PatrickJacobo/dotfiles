@@ -6,9 +6,11 @@ return {
         require("treesj").setup({ --[[ your config ]]
             vim.keymap.set("n", "<leader>m", require("treesj").toggle),
             -- For extending default preset with `recursive = true`
-            vim.keymap.set("n", "<leader>M", function()
-                require("treesj").toggle({ split = { recursive = true } })
-            end),
+            vim.keymap.set(
+                "n",
+                "<leader>M",
+                function() require("treesj").toggle({ split = { recursive = true } }) end
+            ),
         })
     end,
 }
