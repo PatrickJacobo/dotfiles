@@ -5,14 +5,18 @@ else
 fi
 
 PATH="$HOME/.go/bin:$PATH"
+PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$PATH:/home/jacob/.local/bin
 export PATH="$PATH:$HOME/.config/emacs/bin"
 # if [[ -f "/opt/homebrew/bin/brew" ]] then
 #   # If you're using macOS, you'll want this enabled
 #   eval "$(/opt/homebrew/bin/brew shellenv)"
 # fi
-export EDITOR=nvim
+export EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
+export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
+
 export BAT_THEME="Catppuccin Mocha"
+export BROWSER="librewolf"
 # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
 # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 # gpgconf --launch gpg-agent
@@ -32,6 +36,7 @@ zinit light Aloxaf/fzf-tab
 zinit snippet OMZP::sudo
 zinit snippet OMZP::command-not-found
 autoload -Uz compinit && compinit
+autoload -Uz edit-command-line
 zinit cdreplay -q
 
 eval "$(oh-my-posh init zsh --config $HOME/zen.toml)"
@@ -40,6 +45,8 @@ bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
 
 zle_highlight+=(paste:none)
 HISTSIZE=5000
@@ -56,8 +63,8 @@ setopt hist_find_no_dups
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -A --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls -A --color $realpath'
 
 alias ls='eza --color=always --no-time --no-user --no-permissions -a  --no-filesize --icons=always'
 alias vim='nvim'
@@ -70,8 +77,12 @@ alias find="fd"
 alias ping='gping'
 #alias cleancache="sudo pacman -Sc" #ARCH
 alias cleancache="sudo xbps-remove --clean-cache" #VOID
+alias update="sudo xbps-install -Su" #VOID
+# alias update="sudo pacman -Syu" #Arch
+# alias update="sudo apt update && sudo apt upgrade" #deb based
 alias weather="curl wttr.in"
 alias fuck="pkill -9"
+export MANPAGER='nvim +Man!'
 
 # Shell integrations
 alias fzf='fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"'
@@ -95,9 +106,12 @@ read_file ~/nervlogo.txt
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
+export PATH="$HOME/.ghcup/bin:$PATH"
 [ -f "/home/jacob/.ghcup/env" ] && . "/home/jacob/.ghcup/env"
 
 if [ -f '/home/jacob/ocrtest/google-cloud-sdk/path.zsh.inc' ]; then . '/home/jacob/ocrtest/google-cloud-sdk/path.zsh.inc'; fi
 if [ -f '/home/jacob/ocrtest/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/jacob/ocrtest/google-cloud-sdk/completion.zsh.inc'; fi
 
 export PATH="~/.config/composer/vendor/bin:$PATH"
+[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+  source "$EAT_SHELL_INTEGRATION_DIR/zsh"

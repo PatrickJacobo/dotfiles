@@ -1,9 +1,7 @@
-return {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
-    -- use opts = {} for passing setup options
-    -- this is equalent to setup({}) functio
+return{
+    'echasnovski/mini.pairs',
+    version = false,
+    config=function ()
+        require('mini.pairs').setup()
+    end
 }
-
-

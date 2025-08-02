@@ -29,7 +29,7 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "gopls",
-                "pyright",
+                "basedpyright",
                 "phpactor"
             },
             handlers = {
@@ -38,7 +38,21 @@ return {
                         capabilities = capabilities
                     }
                 end,
-
+                hls = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.hls.setup({
+                        capabilities = capabilities,
+                        cmd = { "/home/jacob/.ghcup/bin/haskell-language-server" },
+                        root_dir = lspconfig.util.root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml", ".git"),
+                        settings = {
+                            haskell = {
+                                formattingProvider = "ormolu", -- Or your preferred formatter: stylish-haskell, brittany, etc.
+                                hlintOn = true,
+                                checkProject = true,
+                            },
+                        },
+                    })
+                end,
                 zls = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.zls.setup({

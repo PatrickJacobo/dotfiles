@@ -1,6 +1,7 @@
 return {
 
     "tamton-aquib/duck.nvim",
+    event="VeryLazy",
     config = function()
         vim.keymap.set("n", "<leader>nd", function()
             require("duck").hatch()

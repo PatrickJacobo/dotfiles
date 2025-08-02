@@ -2,28 +2,29 @@
 #+author: Patrick Lee
 
 * Index :toc:
-- [[Nervlogo][Nervlogo]]
-- [[Zshrc][Zshrc]]
-  - [[Some stuff for tty][Some stuff for tty]]
-  - [[Path Stuff][Path Stuff]]
-  - [[ZINIT instance][ZINIT instance]]
-  - [[Prompt][Prompt]]
-  - [[Keybinds][Keybinds]]
-  - [[Zsh opts for history][Zsh opts for history]]
-  - [[Completion][Completion]]
-  - [[Alias][Alias]]
-  - [[Stuff for fzf to work][Stuff for fzf to work]]
-  - [[Function to generate the nerv logo at startup][Function to generate the nerv logo at startup]]
-  - [[PYENV stuff][PYENV stuff]]
-  - [[Haskell stuff][Haskell stuff]]
-  - [[Google stuff][Google stuff]]
-  - [[Php stuff][Php stuff]]
+- [[#nervlogo][Nervlogo]]
+- [[#usefull-command][Usefull command]]
+- [[#zshrc][zshrc]]
+  - [[#some-stuff-for-tty][some stuff for tty]]
+  - [[#path-stuff][Path Stuff]]
+  - [[#zinit-instance][ZINIT instance]]
+  - [[#prompt][Prompt]]
+  - [[#keybinds][Keybinds]]
+  - [[#zsh-opts-for-history][Zsh opts for history]]
+  - [[#completion][Completion]]
+  - [[#alias][Alias]]
+  - [[#stuff-for-fzf-to-work][Stuff for fzf to work]]
+  - [[#function-to-generate-the-nerv-logo-at-startup][Function to generate the nerv logo at startup]]
+  - [[#pyenv-stuff][PYENV stuff]]
+  - [[#haskell-stuff][Haskell stuff]]
+  - [[#google-stuff][Google stuff]]
+  - [[#php-stuff][Php stuff]]
 
 * Nervlogo
 This is the logo of Nerv that shows at startup.
 It doesn't use too much memory; and is somewhat nice to look at.
 #+begin_src txt :tangle nervlogo.txt
-                                __ _._.,._.__
+                                __ _._.,._.__
                           .o8888888888888888P'
                         .d88888888888888888K
           ,8            888888888888888888888boo._
@@ -52,8 +53,17 @@ It doesn't use too much memory; and is somewhat nice to look at.
                                                     `Y8
                                                       '
 #+end_src
-* Zshrc
-** Some stuff for tty
+
+* Usefull command
+#+begin_src shell :tangle no
+echo 255 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1           # full fan speed (value: 255)
+echo 0 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1             # fan is stopped (value: 0)
+echo 2 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable      # change fan mode to automatic
+echo 1 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable      # change fan mode to manual
+echo 0 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable      # change fan mode to full speed
+#+end_src
+* zshrc
+** some stuff for tty
  Set the GPG_TTY to be the same as the TTY, either via the env var
  or via the tty command.
 #+begin_src zsh :tangle .zshrc
@@ -64,16 +74,21 @@ else
 fi
 #+end_src
 ** Path Stuff
+
 #+begin_src zsh :tangle .zshrc
 PATH="$HOME/.go/bin:$PATH"
+PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$PATH:/home/jacob/.local/bin
 export PATH="$PATH:$HOME/.config/emacs/bin"
 # if [[ -f "/opt/homebrew/bin/brew" ]] then
 #   # If you're using macOS, you'll want this enabled
 #   eval "$(/opt/homebrew/bin/brew shellenv)"
 # fi
-export EDITOR=nvim
+export EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
+export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
+
 export BAT_THEME="Catppuccin Mocha"
+export BROWSER="librewolf"
 # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
 # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 # gpgconf --launch gpg-agent
@@ -110,6 +125,7 @@ zinit light Aloxaf/fzf-tab
 zinit snippet OMZP::sudo
 zinit snippet OMZP::command-not-found
 autoload -Uz compinit && compinit
+autoload -Uz edit-command-line
 zinit cdreplay -q
 #+end_src
 ** Prompt
@@ -122,6 +138,9 @@ bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
 #+end_src
 ** Zsh opts for history
 #+begin_src zsh :tangle .zshrc
@@ -142,8 +161,8 @@ setopt hist_find_no_dups
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -A --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls -A --color $realpath'
 
 #+end_src
 ** Alias
@@ -160,19 +179,23 @@ cleancache
 weather
 fuck
 #+begin_src zsh :tangle .zshrc
-alias ls='eza --color=always --no-time --no-user --no-permissions -a  --no-filesize --icons=always'
-alias vim='nvim'
-alias c='clear'
-alias du='dust'
-alias df='duf'
-alias cat="bat"
-alias grep="rg"
-alias find="fd"
-alias ping='gping'
-#alias cleancache="sudo pacman -Sc" #ARCH
-alias cleancache="sudo xbps-remove --clean-cache" #VOID
-alias weather="curl wttr.in"
-alias fuck="pkill -9"
+  alias ls='eza --color=always --no-time --no-user --no-permissions -a  --no-filesize --icons=always'
+  alias vim='nvim'
+  alias c='clear'
+  alias du='dust'
+  alias df='duf'
+  alias cat="bat"
+  alias grep="rg"
+  alias find="fd"
+  alias ping='gping'
+  #alias cleancache="sudo pacman -Sc" #ARCH
+  alias cleancache="sudo xbps-remove --clean-cache" #VOID
+  alias update="sudo xbps-install -Su" #VOID
+  # alias update="sudo pacman -Syu" #Arch
+  # alias update="sudo apt update && sudo apt upgrade" #deb based
+  alias weather="curl wttr.in"
+  alias fuck="pkill -9"
+  export MANPAGER='nvim +Man!'
 #+end_src
 ** Stuff for fzf to work
 #+begin_src zsh :tangle .zshrc
@@ -204,6 +227,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 #+end_src
 ** Haskell stuff
 #+begin_src zsh :tangle .zshrc
+export PATH="$HOME/.ghcup/bin:$PATH"
 [ -f "/home/jacob/.ghcup/env" ] && . "/home/jacob/.ghcup/env"
 #+end_src
 ** Google stuff
@@ -215,5 +239,10 @@ if [ -f '/home/jacob/ocrtest/google-cloud-sdk/completion.zsh.inc' ]; then . '/ho
 #+end_src
 ** Php stuff
 #+begin_src zsh :tangle .zshrc
-export PATH="~/.config/composer/vendor/bin:$PATH"
+  export PATH="~/.config/composer/vendor/bin:$PATH"
+[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+  source "$EAT_SHELL_INTEGRATION_DIR/zsh"
+
+
 #+end_src
+
