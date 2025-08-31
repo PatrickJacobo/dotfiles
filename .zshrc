@@ -112,6 +112,4 @@ export PATH="$HOME/.ghcup/bin:$PATH"
 if [ -f '/home/jacob/ocrtest/google-cloud-sdk/path.zsh.inc' ]; then . '/home/jacob/ocrtest/google-cloud-sdk/path.zsh.inc'; fi
 if [ -f '/home/jacob/ocrtest/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/jacob/ocrtest/google-cloud-sdk/completion.zsh.inc'; fi
 
-export PATH="~/.config/composer/vendor/bin:$PATH"
-[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
-  source "$EAT_SHELL_INTEGRATION_DIR/zsh"
+export PATH=$PATH:"/home/jacob/.config/composer/vendor/bin/"

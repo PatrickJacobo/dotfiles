@@ -239,10 +239,5 @@ if [ -f '/home/jacob/ocrtest/google-cloud-sdk/completion.zsh.inc' ]; then . '/ho
 #+end_src
 ** Php stuff
 #+begin_src zsh :tangle .zshrc
-  export PATH="~/.config/composer/vendor/bin:$PATH"
-[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
-  source "$EAT_SHELL_INTEGRATION_DIR/zsh"
-
-
+    export PATH=$PATH:"/home/jacob/.config/composer/vendor/bin/"
 #+end_src
-
